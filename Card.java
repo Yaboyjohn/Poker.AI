@@ -14,7 +14,7 @@ public class Card {
     /**
      *
      * @param number
-     * @param suit
+     * @param suitName
      * @return The proper name of the card
      */
     String convertToCardName(int number, String suitName) {
@@ -81,4 +81,5 @@ public class Card {
 //        }
 //
 //    }
+
 }
