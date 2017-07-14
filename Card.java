@@ -5,7 +5,7 @@ public class Card {
     int number;
 
     // This function was found on https://stackoverflow.com/questions/7961788/math-random-explained
-    int randomWithRange(int min, int max)
+    public int randomWithRange(int min, int max)
     {
         int range = (max - min) + 1;
         return (int)(Math.random() * range) + min;
@@ -17,7 +17,7 @@ public class Card {
      * @param suitName
      * @return The proper name of the card
      */
-    String convertToCardName(int number, String suitName) {
+    public String convertToCardName(int number, String suitName) {
         String properCardName;
         if (number > 1 && number < 10) {
             properCardName = number + " of " + suitName;
@@ -39,7 +39,7 @@ public class Card {
      * @param y
      * @return A card with the provided suit and number
      */
-    Card(int x, int y) {
+    public Card(int x, int y) {
         suit = x;
         number = y;
         if (suit == 1) {
@@ -59,7 +59,7 @@ public class Card {
     /**
      * @return A randomly generated card
      */
-    Card() {
+    public Card() {
         this.suit = randomWithRange(1,4);
         this.number = randomWithRange(1, 12);
         if (suit == 1) {
@@ -72,6 +72,13 @@ public class Card {
             suitName = "Spades";
         }
         cardName = convertToCardName(number, suitName);
+    }
+
+    public boolean equals(Card c) {
+        if (this.suit == c.suit && this.number == c.number) {
+            return true;
+        }
+        return false;
     }
 
 //    public static void main(String[] args) {
