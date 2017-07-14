@@ -72,6 +72,11 @@ public class Card {
             suitName = "Spades";
         }
         cardName = convertToCardName(number, suitName);
+
+        // For an Ace, it's value should be the highest
+        if (this.number == 1) {
+            this.number = 13;
+        }
     }
 
     public boolean equals(Card c) {
