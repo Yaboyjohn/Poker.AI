@@ -37,9 +37,34 @@ public class Hand {
         return initialScore;
     }
 
+    /**
+     *
+     * @param x First Card
+     * @param y Second Card
+     * This constructor creates a hand with the cards specified
+     */
     public Hand(Card x, Card y) {
         firstCard = x;
         secondCard = y;
+        initialScore = Math.max(firstCard.number, secondCard.number);
+        initialScore = calculateInitialHandScore(firstCard, secondCard, initialScore);
+    }
+
+    /**
+     * This constructor creates a random hand
+     */
+    public Hand() {
+        Card card1 = new Card();
+        Card card2 = new Card();
+        boolean isEqual = card1.equals(card2);
+        while (isEqual) {
+            card2 = new Card();
+            if (!card1.equals(card2)) {
+                isEqual = false;
+            }
+        }
+        firstCard = card1;
+        secondCard = card2;
         initialScore = Math.max(firstCard.number, secondCard.number);
         initialScore = calculateInitialHandScore(firstCard, secondCard, initialScore);
     }

@@ -1,4 +1,4 @@
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class Player {
     int numChips;
@@ -11,12 +11,12 @@ public class Player {
     boolean isRaise;
     boolean isBigBlind;
     boolean isSmallBlind;
-    HashSet<Card> playerCombinations = new HashSet<Card>();
+    ArrayList<Card> playerCombinations = new ArrayList<Card>();
 
     public Player(int initialChipCount, boolean isFirstPlayer, boolean bigBlind, boolean smallBlind) {
         numChips = initialChipCount;
         boolean isTurn = isFirstPlayer;
-        hand = new Hand(new Card(), new Card());
+        hand = new Hand();
         handScore = hand.initialScore;
         currBet = 0;
         isFolded = false;

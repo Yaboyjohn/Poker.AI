@@ -1,8 +1,8 @@
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class Flop {
     int numCardsInFlop;
-    HashSet<Card> cards = new HashSet<Card>();
+    ArrayList<Card> cards = new ArrayList<Card>();
 
     /**
      * Adds a card to the flop
@@ -16,7 +16,8 @@ public class Flop {
         }
         boolean addSuccess = false;
         while (!addSuccess) {
-            for (Card flopCard : cards) {
+            for (int i = 0; i < cards.size(); i++) {
+                Card flopCard = cards.get(i);
                 if (!card.equals(flopCard)) {
                     addSuccess = true;
                 } else {
@@ -45,8 +46,25 @@ public class Flop {
         numCardsInFlop = 0;
     }
 
+    /**
+     * This contructor creates a random flop
+     */
     public Flop() {
         initFlop();
+        numCardsInFlop = 3;
+    }
+
+    /**
+     *
+     * @param a First Card
+     * @param b Second Card
+     * @param c Third Card
+     * This constructor creates a flop with the specified cards
+     */
+    public Flop(Card a, Card b, Card c) {
+        cards.add(a);
+        cards.add(b);
+        cards.add(c);
         numCardsInFlop = 3;
     }
 
