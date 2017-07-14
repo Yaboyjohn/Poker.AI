@@ -4,6 +4,13 @@ public class playerHand {
     Card firstCard;
     Card secondCard;
 
+    /**
+     *
+     * @param firstCard
+     * @param secondCard
+     * @param initialScore
+     * @return A score indicative of how good a player's starting hand is
+     */
     int calculateInitialHandScore(Card firstCard, Card secondCard, int initialScore) {
         int firstCardNumber = firstCard.number;
         int secondCardNumber = secondCard.number;
