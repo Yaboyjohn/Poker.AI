@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Player {
     int numChips;
+    int position;
     boolean isTurn;
     Hand hand;
     int handScore;
@@ -11,6 +12,8 @@ public class Player {
     boolean isRaise;
     boolean isBigBlind;
     boolean isSmallBlind;
+    boolean isChecked;
+    boolean turnFinished;
     ArrayList<Card> playerCombinations = new ArrayList<Card>();
 
     public Player(int initialChipCount, boolean isFirstPlayer, boolean bigBlind, boolean smallBlind) {
@@ -24,13 +27,15 @@ public class Player {
         isRaise = false;
         isBigBlind = bigBlind;
         isSmallBlind = smallBlind;
+        isChecked = false;
+        turnFinished = false;
         playerCombinations.add(hand.firstCard);
         playerCombinations.add(hand.secondCard);
     }
 
-    public static void main(String[] args) {
-        Player p = new Player(100, true, false, false);
-        System.out.println("card1: " + p.hand.firstCard.cardName + " card2: " + p.hand.secondCard.cardName);
-        System.out.println("numchips: " + p.numChips + " isTurn: " + p.isTurn + " handscore: " + p.handScore);
-    }
+//    public static void main(String[] args) {
+//        Player p = new Player(100, true, false, false);
+//        System.out.println("card1: " + p.hand.firstCard.cardName + " card2: " + p.hand.secondCard.cardName);
+//        System.out.println("numchips: " + p.numChips + " isTurn: " + p.isTurn + " handscore: " + p.handScore);
+//    }
 }

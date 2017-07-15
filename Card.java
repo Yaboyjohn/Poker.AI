@@ -5,8 +5,7 @@ public class Card {
     int number;
 
     // This function was found on https://stackoverflow.com/questions/7961788/math-random-explained
-    public int randomWithRange(int min, int max)
-    {
+    public int randomWithRange(int min, int max) {
         int range = (max - min) + 1;
         return (int)(Math.random() * range) + min;
     }
@@ -54,6 +53,11 @@ public class Card {
             System.out.println("Number must be between 1 and 4");
         }
         cardName = convertToCardName(number, suitName);
+
+        // For an Ace, it's value should be the highest
+        if (this.number == 1) {
+            this.number = 13;
+        }
     }
 
     /**
@@ -79,6 +83,11 @@ public class Card {
         }
     }
 
+    /**
+     *
+     * @param c Card to compare to
+     * @return boolean determining whether the 2 cards are the same
+     */
     public boolean equals(Card c) {
         if (this.suit == c.suit && this.number == c.number) {
             return true;
