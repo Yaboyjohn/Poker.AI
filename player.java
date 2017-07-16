@@ -7,30 +7,27 @@ public class Player {
     Hand hand;
     int handScore;
     int currBet;
-    boolean isFolded;
-    boolean isBet;
-    boolean isRaise;
     boolean isBigBlind;
     boolean isSmallBlind;
-    boolean isChecked;
     boolean turnFinished;
     boolean isWinner;
     boolean eliminated;
+    String status;
     ArrayList<Card> playerCombinations = new ArrayList<Card>();
 
-    public Player(int initialChipCount, boolean isFirstPlayer, boolean bigBlind, boolean smallBlind) {
+    public Player(int initialChipCount, boolean isFirstPlayer, boolean bigBlind, boolean smallBlind, int initPosition) {
         numChips = initialChipCount;
-        boolean isTurn = isFirstPlayer;
+        position = initPosition;
+        isTurn = isFirstPlayer;
         hand = new Hand();
         handScore = hand.initialScore;
         currBet = 0;
-        isFolded = false;
-        isBet = false;
-        isRaise = false;
         isBigBlind = bigBlind;
         isSmallBlind = smallBlind;
-        isChecked = false;
+        status = null;
         turnFinished = false;
+        isWinner = false;
+        eliminated = false;
         playerCombinations.add(hand.firstCard);
         playerCombinations.add(hand.secondCard);
     }

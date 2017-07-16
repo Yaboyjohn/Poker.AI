@@ -20,6 +20,12 @@ public class Hand {
         // Pair, different suits ex. 6 of hearts, 6 of spades
         if (firstCardNumber == secondCardNumber && firstCardSuit != secondCardSuit) {
             initialScore*=2;
+
+            // For pairs, set the score to be at least 20
+            if (initialScore < 20) {
+                int difference = 20 - initialScore;
+                initialScore += difference;
+            }
         }
 
         // Same suit ex. 8 of clubs, 2 of clubs

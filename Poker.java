@@ -16,6 +16,11 @@ public class Poker {
         return (int)(Math.random() * range) + min;
     }
 
+    //have the constructor call this function to setup all the players
+    public void initPlayers(int n) {
+
+    }
+
     /**
      *
      * @param n Number of desired players to have in this poker game
@@ -35,9 +40,9 @@ public class Poker {
             bigBlindPos = 1;
             firstBetPos = 0;
 
-            Player player1 = new Player(chipCount, true, false, true);
+            Player player1 = new Player(chipCount, true, false, true, 0);
             players.add(player1);
-            Player player2 = new Player(chipCount, false, true, false);
+            Player player2 = new Player(chipCount, false, true, false, 1);
             players.add(player2);
         }
 
@@ -51,6 +56,9 @@ public class Poker {
     public static void main(String[] args) {
         Poker game = new Poker(2, 100, 0, 1);
         while (!game.gameOver) {
+            Round newRound = new Round(2, game.players, game.smallBlindPos, game.bigBlindPos, game.firstBetPos,
+                    game.smallBlindAmount, game.bigBlindAmount);
+
             Turn newTurn = new Turn(2, game.players);
             game.numTurns++;
         }
