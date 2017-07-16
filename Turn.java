@@ -5,6 +5,7 @@ public class Turn {
     int numPlayersFinishedWithTurn;
     Boolean turnOver;
     Boolean roundWinner;
+    int betAmount = 10;
 
     /**
      *
@@ -27,21 +28,48 @@ public class Turn {
         currRound.pot += totalBlindsAmount;
     }
 
-    public void calculateMoveChoice(Player player, boolean mustCallToMatch) {
+    public String calculateMoveChoice(Player player, boolean mustCallToMatch) {
         if (!mustCallToMatch) {
             if (player.handScore >= 20) {
                 player.status = "BET";
+                return "BET";
             } else if (player.handScore >= 12 && player.handScore <= 20) {
                 player.status = "CHECK";
+                return "CHECK";
             } else {
                 player.status =  "FOLD";
+                return "FOLD";
             }
         }
 
+        // Here, the a previous player raised, so this current player must call to match and stay active in the round
+        if (player.handScore >= 24) {
+            player.status = "BET";
+            return "BET";
+        } else {
+            player.status = "FOLD";
+            return "FOLD";
+        }
     }
 
-    public ArrayList<Player> preFlopBetting(ArrayList<Player> players, int firstBetPos) {
-
+    public ArrayList<Player> preFlopBetting(ArrayList<Player> players, int firstBetPos, Round currRound) {
+        boolean playerBet = false;
+        for (int i = firstBetPos; i < players.size(); i++) {
+            Player player = players.get(i);
+            if (calculateMoveChoice(player, playerBet).equals("BET")) {
+                player.numChips -= betAmount;
+                currRound.pot += betAmount;
+                playerBet = true;
+            }
+        }
+        for (int i = 0; i < firstBetPos; i++) {
+            Player player = players.get(i);
+            if (calculateMoveChoice(player, playerBet).equals("BET")) {
+                player.numChips -= betAmount;
+                currRound.pot += betAmount;
+                playerBet = true;
+            }
+        }
     }
 
     public Turn(int n, ArrayList<Player> players, int bigBlindPos, int smallBlindPos, int firstBetPos,
