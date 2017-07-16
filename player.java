@@ -14,6 +14,8 @@ public class Player {
     boolean isSmallBlind;
     boolean isChecked;
     boolean turnFinished;
+    boolean isWinner;
+    boolean eliminated;
     ArrayList<Card> playerCombinations = new ArrayList<Card>();
 
     public Player(int initialChipCount, boolean isFirstPlayer, boolean bigBlind, boolean smallBlind) {
