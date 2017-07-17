@@ -95,6 +95,11 @@ public class Card {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return cardName;
+    }
+
 //    public static void main(String[] args) {
 //        for (int i = 0; i < 20; i++) {
 //            Card x = new Card();

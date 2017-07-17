@@ -75,6 +75,11 @@ public class Hand {
         initialScore = calculateInitialHandScore(firstCard, secondCard, initialScore);
     }
 
+    @Override
+    public String toString() {
+        return firstCard.toString() + " and " + secondCard.toString();
+    }
+
 //    public static void main(String[] args) {
 //        for (int i = 0; i < 20; i++) {
 //            Card x = new Card();

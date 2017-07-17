@@ -27,11 +27,13 @@ public class Poker {
      * Constructor for a new poker game
      */
     //make another constructor with only n and chipcount and make the initialBB initialSB pos be determined randomly
-    public Poker(int n, int chipCount, int initialBigBlindPos, int initialSmallBlindPos) {
+    public Poker(int n, int chipCount, int initialBigBlindPos, int initialSmallBlindPos, int initialSmallBlindAmount, int initialBigBlindAmount) {
         numTurns = 0;
         numPlayers = n;
-        bigBlindAmount = initialBigBlindPos;
-        smallBlindAmount = initialSmallBlindPos;
+        bigBlindPos = initialBigBlindPos;
+        smallBlindPos = initialSmallBlindPos;
+        bigBlindAmount = initialBigBlindAmount;
+        smallBlindAmount = initialSmallBlindAmount;
         gameOver = false;
 
 
@@ -54,14 +56,14 @@ public class Poker {
     }
 
     public static void main(String[] args) {
-        Poker game = new Poker(2, 100, 0, 1);
-        while (!game.gameOver) {
-            Round newRound = new Round(2, game.players, game.smallBlindPos, game.bigBlindPos, game.firstBetPos,
+        Poker game = new Poker(2, 100, 0, 1, 4, 8);
+//        while (!game.gameOver) {
+//            Round newRound = new Round(2, game.players, game.smallBlindPos, game.bigBlindPos, game.firstBetPos,
+//                    game.smallBlindAmount, game.bigBlindAmount);
+//            game.numTurns++;
+//        }
+        Round newRound = new Round(2, game.players, game.smallBlindPos, game.bigBlindPos, game.firstBetPos,
                     game.smallBlindAmount, game.bigBlindAmount);
-
-            Turn newTurn = new Turn(2, game.players);
-            game.numTurns++;
-        }
 //        System.out.println("WINNER IS: " + winner);
 //        System.out.println("Number of turns: " + game.numTurns);
     }

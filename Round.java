@@ -9,6 +9,8 @@ public class Round {
                                    int firstBetPos, int smallBlindAmount, int bigBlindAmount) {
         Turn turn = new Turn(n, players, bigBlindPos, smallBlindPos, firstBetPos, bigBlindAmount,
                 smallBlindAmount, this);
+        roundOver = true;
+        return true;
     }
 
     public Round(int n, ArrayList<Player> players, int smallBlindPos, int bigBlindPos, int firstBetPos,
@@ -18,6 +20,14 @@ public class Round {
         pot = 0;
         while (!roundOver) {
             simulateOneTurn(n, players, bigBlindPos, smallBlindPos, firstBetPos, smallBlindAmount, bigBlindAmount);
+            for (Player p : players) {
+                System.out.println("hand: " + p.hand.toString() + " | handscore: " + p.handScore);
+                System.out.println("player numChips: " + p.numChips);
+                System.out.println("player status: " + p.status);
+                System.out.println("bigblind: " + p.isBigBlind + " smallblind: " + p.isSmallBlind);
+                System.out.println("position: " + p.position);
+                System.out.println("Pot: " + pot);
+            }
         }
     }
 }

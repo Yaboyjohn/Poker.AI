@@ -33,7 +33,7 @@ public class Turn {
             if (player.handScore >= 20) {
                 player.status = "BET";
                 return "BET";
-            } else if (player.handScore >= 12 && player.handScore <= 20) {
+            } else if (player.handScore >= 11 && player.handScore <= 20) {
                 player.status = "CHECK";
                 return "CHECK";
             } else {
@@ -70,6 +70,7 @@ public class Turn {
                 playerBet = true;
             }
         }
+        return players;
     }
 
     public Turn(int n, ArrayList<Player> players, int bigBlindPos, int smallBlindPos, int firstBetPos,
@@ -80,5 +81,6 @@ public class Turn {
         roundWinner = false;
 
         initBlinds(players, bigBlindPos, smallBlindPos, bigBlindAmount, smallBlindAmount, currRound);
+        preFlopBetting(players, firstBetPos, currRound);
     }
 }
