@@ -29,46 +29,104 @@ public class Turn {
     }
 
     public String calculateMoveChoice(Player player, boolean mustCallToMatch) {
-        if (!mustCallToMatch) {
+        // If the player is the big blind, it doesn't make sense to fold, so their 2 options are check or raise
+        if (player.isBigBlind && !mustCallToMatch) {
+            System.out.println("BB route");
             if (player.handScore >= 20) {
-                player.status = "BET";
-                return "BET";
-            } else if (player.handScore >= 11 && player.handScore <= 20) {
-                player.status = "CHECK";
-                return "CHECK";
+                player.status = "RAISED";
+                return "RAISED";
             } else {
-                player.status =  "FOLD";
-                return "FOLD";
+                player.status = "CHECKED";
+                return "CHECKED";
             }
         }
 
-        // Here, the a previous player raised, so this current player must call to match and stay active in the round
+        if (player.isSmallBlind && !mustCallToMatch) {
+            System.out.println("SB route");
+            if (player.handScore >= 20) {
+                player.status = "RAISED";
+                return "RAISED";
+            } else if (player.handScore >= 11 && player.handScore <= 20) {
+                player.status = "CALLED";
+                return "CALLED";
+            } else {
+                player.status = "FOLDED";
+                return "FOLDED";
+            }
+        }
+
+        if (!mustCallToMatch) {
+            System.out.println("no one raised");
+            if (player.handScore >= 20) {
+                player.status = "RAISED";
+                return "RAISED";
+            } else if (player.handScore >= 11 && player.handScore <= 20) {
+                player.status = "CHECKED";
+                return "CHECKED";
+            } else {
+                player.status =  "FOLDED";
+                return "FOLDED";
+            }
+        }
+        System.out.println("someone raised");
+        // Here, a previous player raised, so this current player must call to match and stay active in the round
         if (player.handScore >= 24) {
-            player.status = "BET";
-            return "BET";
+            player.status = "RAISED";
+            return "RAISED";
         } else {
-            player.status = "FOLD";
-            return "FOLD";
+            player.status = "FOLDED";
+            return "FOLDED";
         }
     }
 
-    public ArrayList<Player> preFlopBetting(ArrayList<Player> players, int firstBetPos, Round currRound) {
-        boolean playerBet = false;
+    public ArrayList<Player> preFlopBetting(ArrayList<Player> players, int firstBetPos, Round currRound, int smallBlindAmount) {
+        boolean mustCallToMatch = false;
         for (int i = firstBetPos; i < players.size(); i++) {
+            System.out.println("i1: " + i);
             Player player = players.get(i);
-            if (calculateMoveChoice(player, playerBet).equals("BET")) {
+
+            // Player is small blind so BET means calling the big blind
+            if (calculateMoveChoice(player, mustCallToMatch).equals("CALLED") && player.isSmallBlind) {
+                player.numChips -= smallBlindAmount;
+                currRound.pot += smallBlindAmount;
+            } else if (calculateMoveChoice(player, mustCallToMatch).equals("RAISED") && player.isSmallBlind) {
+                player.numChips -= (betAmount + smallBlindAmount);
+                currRound.pot += (betAmount + smallBlindAmount);
+                mustCallToMatch = true;
+            } else if (calculateMoveChoice(player, mustCallToMatch).equals("RAISED")) {
                 player.numChips -= betAmount;
                 currRound.pot += betAmount;
-                playerBet = true;
+                mustCallToMatch = true;
+            } else if (calculateMoveChoice(player, mustCallToMatch).equals("CHECKED")){
+                System.out.println("CHECKED");
+            } else {
+                System.out.println("FOLDED");
+                System.out.println("hand: " + player.hand.toString() + " | handscore: " + player.handScore);
+                System.out.println("player numChips: " + player.numChips);
+                System.out.println("player status: " + player.status);
+                System.out.println("bigblind: " + player.isBigBlind + " smallblind: " + player.isSmallBlind);
+                System.out.println("position: " + player.position);
+                System.out.println("Pot: " + currRound.pot);
+                player.turnFinished = true;
+                players.remove(i);
             }
         }
+
+        //this possibly might not have as many conditions because the blinds are taken care of? need to loook into this (not used since im testing 2 ppl rn)
         for (int i = 0; i < firstBetPos; i++) {
+            System.out.println("i2: " + i);
             Player player = players.get(i);
-            if (calculateMoveChoice(player, playerBet).equals("BET")) {
+            if (calculateMoveChoice(player, mustCallToMatch).equals("RAISED")) {
                 player.numChips -= betAmount;
                 currRound.pot += betAmount;
-                playerBet = true;
+                mustCallToMatch = true;
             }
+        }
+
+        // Everyone folded except for one person
+        if (players.size() == 1) {
+            Player p = players.get(0);
+            p.status = "WON";
         }
         return players;
     }
@@ -81,6 +139,6 @@ public class Turn {
         roundWinner = false;
 
         initBlinds(players, bigBlindPos, smallBlindPos, bigBlindAmount, smallBlindAmount, currRound);
-        preFlopBetting(players, firstBetPos, currRound);
+        preFlopBetting(players, firstBetPos, currRound, smallBlindAmount);
     }
 }
