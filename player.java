@@ -19,8 +19,8 @@ public class Player {
         numChips = initialChipCount;
         position = initPosition;
         isTurn = isFirstPlayer;
-        hand = new Hand();
-        handScore = hand.initialScore;
+        hand = null;
+        handScore = 0;
         currBet = 0;
         isBigBlind = bigBlind;
         isSmallBlind = smallBlind;
@@ -28,8 +28,10 @@ public class Player {
         turnFinished = false;
         isWinner = false;
         eliminated = false;
-        playerCombinations.add(hand.firstCard);
-        playerCombinations.add(hand.secondCard);
+    }
+
+    public String toString() {
+        return ("position: " + position + "| numChips: " + this.numChips + "| hand: " + hand.toString() + "| handscore: " + handScore + "| isBigBlind: " + isBigBlind + "| isSmallBlind: " + isSmallBlind);
     }
 
 //    public static void main(String[] args) {

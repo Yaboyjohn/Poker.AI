@@ -5,7 +5,7 @@ public class Turn {
     int numPlayersFinishedWithTurn;
     Boolean turnOver;
     Boolean roundWinner;
-    int betAmount = 10;
+    int betAmount = 8;
 
     /**
      *
@@ -132,12 +132,12 @@ public class Turn {
     }
 
     public Turn(int n, ArrayList<Player> players, int bigBlindPos, int smallBlindPos, int firstBetPos,
-                int bigBlindAmount, int smallBlindAmount, Round currRound) {
+                int bigBlindAmount, int smallBlindAmount, Round currRound, Deck deck) {
         numPlayers = n;
         numPlayersFinishedWithTurn = 0;
         turnOver = false;
         roundWinner = false;
-
+        deck.initHands(players);
         initBlinds(players, bigBlindPos, smallBlindPos, bigBlindAmount, smallBlindAmount, currRound);
         preFlopBetting(players, firstBetPos, currRound, smallBlindAmount);
     }
